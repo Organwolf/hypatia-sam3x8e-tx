@@ -26,9 +26,9 @@ void usart0_init(void){
 	pmc_enable_periph_clk(ID_USART0);
 	*ptr_USART0_MR |= (1<<6) | (1<<7);
 	*ptr_USART0_MR &= ~((1<<5) | (1<<4));
-	//*ptr_USART0_MR |= 0x800;				//no parity, normal mode
+	//*ptr_USART0_MR |= 0x800;						//no parity, normal mode
 	PIOA->PIO_PDR |= (PIO_PA10) | (PIO_PA11);
-	*ptr_USART0_BRGR |= (0b1000100010111<<0);			//Set baudrate(1200). CD==0b1000100010111.
+	*ptr_USART0_BRGR |= (0b1000100010111<<0);		//Set baudrate(1200). CD==0b1000100010111.
 	*ptr_USART0_CR |= (1u<<TXEN0);					//Enable TXEN.
 }
 
@@ -42,16 +42,18 @@ void usart0_transmit(unsigned char data){
 
 void TC0_Handler(void)
 {
+	
 	volatile uint32_t ul_dummy;
 	/* Clear status bit to acknowledge interrupt */
 	ul_dummy = tc_get_status(TC0, 0);			//The compare bit is cleared by reading the register, manual p. 915
 	/* Avoid compiler warning */
 	UNUSED(ul_dummy);
 	
-	if(packetId==8){
-		packetId=0;
-	}
+// 	if(packetId==8){
+// 		packetId=0;
+// 	}
 	//printf("%d", packet[packetId]);
-	usart0_transmit(5);
-	packetId++;
+	usart0_transmit(3);
+	//packetId++;
+
 }
