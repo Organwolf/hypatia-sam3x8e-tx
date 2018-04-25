@@ -22,15 +22,16 @@ uint32_t *const ptr_USART0_BRGR = (uint32_t *) (USART0_BASE_ADDRESS + 0x0020U);	
 
 volatile uint8_t packetId = 0;
 volatile uint8_t packet[8] = {1,2,3,4,5,6,7,8};
+volatile uint8_t counter=0;
 
 void usart0_init(void){
 	pmc_enable_periph_clk(ID_USART0);
+	*ptr_USART0_CR |= (1u<<TXEN0);					//Enable TXEN.
 	*ptr_USART0_MR |= (1<<6) | (1<<7);
 	*ptr_USART0_MR &= ~((1<<5) | (1<<4));
 	//*ptr_USART0_MR |= 0x800;						//no parity, normal mode
 	PIOA->PIO_PDR |= (PIO_PA10) | (PIO_PA11);
 	*ptr_USART0_BRGR |= (0b1000100010111<<0);		//Set baudrate(1200). CD==0b1000100010111.
-	*ptr_USART0_CR |= (1u<<TXEN0);					//Enable TXEN.
 }
 
 void usart0_transmit(unsigned char data){
@@ -49,12 +50,12 @@ void TC0_Handler(void)
 	ul_dummy = tc_get_status(TC0, 0);			//The compare bit is cleared by reading the register, manual p. 915
 	/* Avoid compiler warning */
 	UNUSED(ul_dummy);
-	
-	uint8_t dataBits[4] = {0,1,1,1};
+
+	uint8_t dataBits[4] = {1,1,0,0};
 	uint8_t hammingData;
 	hammingData = createHammingCode(dataBits);
 	usart0_transmit(hammingData);
-	//printf(0b11110000);
+
 
 
 }

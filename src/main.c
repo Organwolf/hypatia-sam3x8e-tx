@@ -13,8 +13,9 @@ int main (void)
 	sysclk_init();
 	board_init();
 	usart0_init();
-	configureConsole();
+	ioport_init();
 	configure_tc();
+	configureConsole();
 	
 	uint8_t dataBits[4] = {0,1,1,1};
 	uint8_t hammingData;
