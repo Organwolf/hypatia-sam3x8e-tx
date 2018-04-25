@@ -22,7 +22,11 @@ uint32_t *const ptr_USART0_BRGR = (uint32_t *) (USART0_BASE_ADDRESS + 0x0020U);	
 
 volatile uint8_t packetId = 0;
 volatile uint8_t packet[8] = {1,2,3,4,5,6,7,8};
-volatile uint8_t counter=0;
+volatile uint8_t counter = 0;
+volatile uint8_t xCntr = 0;
+volatile uint8_t yCntr = 0;
+volatile uint8_t xPos[3] = {2,4,5};
+volatile uint8_t yPos[3] = {1,6,9};
 
 void usart0_init(void){
 	pmc_enable_periph_clk(ID_USART0);
@@ -44,17 +48,30 @@ void usart0_transmit(unsigned char data){
 
 void TC0_Handler(void)
 {
-	
+	/* Clear status bit to acknowledge interrupt & avoid compiler warning*/
 	volatile uint32_t ul_dummy;
-	/* Clear status bit to acknowledge interrupt */
-	ul_dummy = tc_get_status(TC0, 0);			//The compare bit is cleared by reading the register, manual p. 915
-	/* Avoid compiler warning */
+	ul_dummy = tc_get_status(TC0, 0);			
 	UNUSED(ul_dummy);
-
-	uint8_t dataBits[4] = {1,1,0,0};
+	
 	uint8_t hammingData;
-	hammingData = createHammingCode(dataBits);
-	usart0_transmit(hammingData);
+		
+	if(xCntr < 3){
+		hammingData = createHammingCode(xPos[xCntr]);
+		usart0_transmit(hammingData);
+		xCntr++;
+	}
+	
+	else if(xCntr > 2){
+		hammingData = createHammingCode(yPos[yCntr]);
+		usart0_transmit(hammingData);
+		yCntr++;
+		if(yCntr == 3){
+			yCntr = 0;
+			xCntr = 0;
+		}
+	}
+
+
 
 
 
