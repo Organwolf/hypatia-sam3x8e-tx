@@ -8,6 +8,7 @@
  */ 
 #include "asf.h"
 #include "usart0.h"
+#include "createHamming.h"
 
 
 #define TXEN0 6
@@ -49,11 +50,11 @@ void TC0_Handler(void)
 	/* Avoid compiler warning */
 	UNUSED(ul_dummy);
 	
-// 	if(packetId==8){
-// 		packetId=0;
-// 	}
-	//printf("%d", packet[packetId]);
-	usart0_transmit(3);
-	//packetId++;
+	uint8_t dataBits[4] = {0,1,1,1};
+	uint8_t hammingData;
+	hammingData = createHammingCode(dataBits);
+	usart0_transmit(hammingData);
+	//printf(0b11110000);
+
 
 }

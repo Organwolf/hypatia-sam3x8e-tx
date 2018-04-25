@@ -24,6 +24,6 @@ void configureConsole(void)
 	sysclk_enable_peripheral_clock(CONSOLE_UART_ID);
 	stdio_serial_init(CONF_UART, &uart_serial_options);
 	
-	printf("Console ready\n");
-	printf("=============\n");
+// 	printf("Console ready\n");
+// 	printf("=============\n");
 }
