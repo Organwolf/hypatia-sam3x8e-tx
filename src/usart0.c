@@ -20,9 +20,9 @@ uint32_t *const ptr_USART0_THR = (uint32_t *) (USART0_BASE_ADDRESS + 0x001CU);	/
 uint32_t *const ptr_USART0_BRGR = (uint32_t *) (USART0_BASE_ADDRESS + 0x0020U);	//Baud-rate generator
 
 volatile uint8_t packetId = 0;
-volatile uint8_t packet[8] = {1,2,3,4,5,6,7,8};
+volatile uint8_t packet[8] = {1,2,3,4,5,6};
 volatile uint8_t counter=0;
-
+volatile uint8_t sync = 0b01010101;
 
 void usart0_init(void){
 	pmc_enable_periph_clk(ID_USART0);
@@ -43,23 +43,21 @@ void usart0_transmit(unsigned char data){
 
 
 void TC0_Handler(void)
-{
-	
+{	
+	/* Clear status bit to acknowledge interrupt & avoid compiler warning */
 	volatile uint32_t ul_dummy;
-	/* Clear status bit to acknowledge interrupt */
-	ul_dummy = tc_get_status(TC0, 0);			//The compare bit is cleared by reading the register, manual p. 915
-	/* Avoid compiler warning */
+	ul_dummy = tc_get_status(TC0, 0);
 	UNUSED(ul_dummy);
-	uint8_t something = 0;
-	if(counter%2==0){
-		something = 2;
-		usart0_transmit(something);
+	
+	if(counter == 0){
+		usart0_transmit(sync);
+		counter++;
 	}
 	else{
-		something = 4;
-		usart0_transmit(something);
+		usart0_transmit(packet[counter-1]);
+		counter++;
+	}	
+	if(counter==7){
+		counter=0;
 	}
-	counter++;
-
-
 }
