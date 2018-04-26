@@ -12,6 +12,8 @@
 void usart0_init(void);
 void usart0_transmit(unsigned char data);
 char usart0_receive(void);
+extern uint8_t finalXYCoordinates[];
+extern int recieve_flag;
 
 
 #endif /* UART_H_ */
