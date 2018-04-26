@@ -2,10 +2,9 @@
  * Authors: Aron Polner & Filip Nilsson
  */
 #include <asf.h>
-#include "consoleFunctions.h"
 #include "usart0.h"
 #include "conf_tc.h"
-#include "createHamming.h"
+#include "consoleFunctions.h"
 
 int main (void)
 {
@@ -16,11 +15,7 @@ int main (void)
 	ioport_init();
 	configure_tc();
 	configureConsole();
-	
-	uint8_t dataBits[4] = {0,1,1,1};
-	uint8_t hammingData;
-	hammingData = createHammingCode(dataBits);
-	//printf("%d",hammingData);
+
 	//usart0_transmit(hammingData);
 	
 	while(1){
