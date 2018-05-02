@@ -27,19 +27,19 @@ int main (void)
 	while(1){
 		if (read_char() == 'V'){
 			tc_stop(TC0,0); //no interupt when recieving new posisition
-			uint8_t tempXYCoordinates[6] = {0}; //recieve 6 chars 3x and 3y
-			for(int i = 0; i < 6; i++){
+			uint8_t tempXYCoordinates[2] = {0}; //recieve 6 chars 3x and 3y
+			for(int i = 0; i < 2; i++){
 				while(!uart_receiver_ready()){ //wait until ready
 				}
 				tempXYCoordinates[i] = uart_receive_char();
 			}
 			
-			for(int i = 0; i < 6; i++){
+			for(int i = 0; i < 2; i++){
 				finalXYCoordinates[i] = tempXYCoordinates[i];
 			}
 			tc_start(TC0,0);
 	}
 
 	/* Insert application code here, after the board has been initialized. */
-	}	
+		}
 	}
