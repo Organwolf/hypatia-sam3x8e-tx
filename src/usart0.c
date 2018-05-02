@@ -19,8 +19,6 @@ uint32_t *const ptr_USART0_SR = (uint32_t *) (USART0_BASE_ADDRESS + 0x0014U);	//
 uint32_t *const ptr_USART0_THR = (uint32_t *) (USART0_BASE_ADDRESS + 0x001CU);	//Transmit holding register
 uint32_t *const ptr_USART0_BRGR = (uint32_t *) (USART0_BASE_ADDRESS + 0x0020U);	//Baud-rate generator
 
-volatile uint8_t packetId = 0;
-volatile uint8_t packet[8] = {1,2,3,4,5,6};
 volatile uint8_t counter=0;
 volatile uint8_t sync = 0b01010101;
 
@@ -57,7 +55,7 @@ void TC0_Handler(void)
 		usart0_transmit(finalXYCoordinates[counter-1]);
 		counter++;
 	}	
-	if(counter==7){
+	if(counter==3){
 		counter=0;
 	}
 }

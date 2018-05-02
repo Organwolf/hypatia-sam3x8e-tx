@@ -9,7 +9,7 @@
 #include "uartfunctions.h"
 
 
-extern uint8_t finalXYCoordinates[6] = {0};
+extern uint8_t finalXYCoordinates[2] = {0};
 //extern int recieve_flag = 1;
 #define UART_BAUDRATE	115200
 
@@ -22,7 +22,6 @@ int main (void)
 	ioport_init();
 	uart_config((uint32_t)UART_BAUDRATE);
 	configure_tc();
-	//usart0_transmit(hammingData);
 	
 	while(1){
 		if (read_char() == 'V'){
@@ -38,8 +37,6 @@ int main (void)
 				finalXYCoordinates[i] = tempXYCoordinates[i];
 			}
 			tc_start(TC0,0);
-	}
-
-	/* Insert application code here, after the board has been initialized. */
 		}
 	}
+}
