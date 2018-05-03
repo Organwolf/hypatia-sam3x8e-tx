@@ -28,6 +28,7 @@ void usart0_init(void){
 	*ptr_USART0_MR |= (1<<6) | (1<<7);
 	*ptr_USART0_MR &= ~((1<<5) | (1<<4));
 	//*ptr_USART0_MR |= 0x800;						//no parity, normal mode
+	//*ptr_USART0_MR |= (1<<17);
 	PIOA->PIO_PDR |= (PIO_PA10) | (PIO_PA11);
 	*ptr_USART0_BRGR |= (0b1000100010111<<0);		//Set baudrate(1200). CD==0b1000100010111.
 }
