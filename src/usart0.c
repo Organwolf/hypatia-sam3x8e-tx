@@ -54,7 +54,7 @@ void TC0_Handler(void)
 		counter++;
 	}
 	else{
-		usart0_transmit(packet[counter-1]);
+		usart0_transmit(finalXYCoordinates[counter-1]);
 		counter++;
 	}	
 	if(counter==7){
