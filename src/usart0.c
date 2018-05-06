@@ -9,8 +9,12 @@
 #include "asf.h"
 #include "usart0.h"
 
-
+#define BAUD    1200
+#define F_CPU    84000000
+#define CD  (unsigned int)(F_CPU/16/BAUD-1)
+#define PAR 9
 #define TXEN0 6
+#define NBSTOP 12
 
 #define USART0_BASE_ADDRESS (0x40098000U)
 uint32_t *const ptr_USART0_CR = (uint32_t *) (USART0_BASE_ADDRESS + 0x0000U);	//Control register
@@ -29,9 +33,11 @@ void usart0_init(void){
 	*ptr_USART0_CR |= (1u<<TXEN0);					//Enable TXEN.
 	*ptr_USART0_MR |= (1<<6) | (1<<7);
 	*ptr_USART0_MR &= ~((1<<5) | (1<<4));
+// 	*ptr_USART0_MR &= ~(1<<NBSTOP);
+// 	*ptr_USART0_MR |= (4<<PAR);
 	//*ptr_USART0_MR |= 0x800;						//no parity, normal mode
 	PIOA->PIO_PDR |= (PIO_PA10) | (PIO_PA11);
-	*ptr_USART0_BRGR |= (0b1000100010111<<0);		//Set baudrate(1200). CD==0b1000100010111.
+	*ptr_USART0_BRGR |= (CD<<0);		//Set baudrate(1200). CD==0b1000100010111.
 }
 
 void usart0_transmit(unsigned char data){
@@ -48,16 +54,17 @@ void TC0_Handler(void)
 	volatile uint32_t ul_dummy;
 	ul_dummy = tc_get_status(TC0, 0);
 	UNUSED(ul_dummy);
-	
-	if(counter == 0){
-		usart0_transmit(sync);
-		counter++;
-	}
-	else{
-		usart0_transmit(packet[counter-1]);
-		counter++;
-	}	
-	if(counter==7){
-		counter=0;
-	}
+	usart0_transmit(200);
+	counter++;
+// 	if(counter == 0){
+// 		usart0_transmit(sync);
+// 		counter++;
+// 	}
+// 	else{
+// 		usart0_transmit(packet[counter-1]);
+// 		counter++;
+// 	}	
+// 	if(counter==7){
+// 		counter=0;
+// 	}
 }
