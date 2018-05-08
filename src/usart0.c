@@ -9,9 +9,9 @@
 #include "asf.h"
 #include "usart0.h"
 
-#define BAUD    1200
+#define BAUD    2400
 #define F_CPU    84000000
-#define CD  (unsigned int)(F_CPU/16/BAUD-1)
+#define CD  (unsigned int)(F_CPU/16/BAUD-1)		//used in BRGR register
 #define PAR 9
 #define TXEN0 6
 #define NBSTOP 12
@@ -25,8 +25,11 @@ uint32_t *const ptr_USART0_BRGR = (uint32_t *) (USART0_BASE_ADDRESS + 0x0020U);	
 
 volatile uint8_t packetId = 0;
 volatile uint8_t packet[8] = {1,2,3,4,5,6};
-volatile uint8_t counter=0;
-volatile uint8_t sync = 0b01010101;
+volatile uint8_t index2 = 0;
+volatile uint8_t byteCounter=0;
+volatile uint8_t flag=1;
+volatile uint8_t sync = 0b11110101;	//245, not a known game-area coordinate
+volatile uint8_t coordinates[2] = {200,120};	//test coordinates
 
 void usart0_init(void){
 	pmc_enable_periph_clk(ID_USART0);
@@ -54,17 +57,20 @@ void TC0_Handler(void)
 	volatile uint32_t ul_dummy;
 	ul_dummy = tc_get_status(TC0, 0);
 	UNUSED(ul_dummy);
-	usart0_transmit(200);
-	counter++;
-// 	if(counter == 0){
-// 		usart0_transmit(sync);
-// 		counter++;
-// 	}
-// 	else{
-// 		usart0_transmit(packet[counter-1]);
-// 		counter++;
-// 	}	
-// 	if(counter==7){
-// 		counter=0;
-// 	}
+	if(flag){
+		usart0_transmit(sync);
+		flag=0;
+	}
+	else{
+		usart0_transmit(coordinates[index2]);
+		byteCounter++;
+	}
+	if(byteCounter==20){
+		byteCounter=0;
+		index2++;
+		if(index2==2){
+			index2=0;
+			flag=1;
+		}
+	}
 }

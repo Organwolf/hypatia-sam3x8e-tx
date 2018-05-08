@@ -8,7 +8,7 @@
 #include <asf.h>
 #include "conf_tc.h"
 
-#define FREQ 85
+#define FREQ 110			//timer frequency
 #define CALC (42000000/FREQ)
 
 void configure_tc(void)
