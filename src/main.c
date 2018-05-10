@@ -25,9 +25,10 @@ int main (void)
 	configure_tc();
 	
 	while(1){
+		//New coordinate incoming from the uart && And the previous coordinate has been sent to the master
 		if ((read_char() == 'V')&&(recieve_flag==1)){
-			tc_stop(TC0,0); //no interupt when recieving new posisition
-			uint8_t tempXYCoordinates[2] = {0}; //recieve 6 chars 3x and 3y
+			tc_stop(TC0,0); //no interrupt when receiving new position
+			uint8_t tempXYCoordinates[2] = {0}; //receive 6 chars 3x and 3y
 			for(int i = 0; i < 2; i++){
 				while(!uart_receiver_ready()){ //wait until ready
 				}
