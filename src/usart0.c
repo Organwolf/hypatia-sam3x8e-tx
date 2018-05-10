@@ -71,6 +71,7 @@ void TC0_Handler(void)
 		if(theIndex==2){
 			theIndex=0;
 			flag=1;
+			recieve_flag=1;
 		}
 	}
 }

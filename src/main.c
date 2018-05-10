@@ -10,7 +10,8 @@
 
 
 extern uint8_t finalXYCoordinates[2] = {120,65};
-//extern int recieve_flag = 1;
+extern int recieve_flag = 1;
+
 #define UART_BAUDRATE	115200
 
 int main (void)
@@ -24,7 +25,7 @@ int main (void)
 	configure_tc();
 	
 	while(1){
-		if (read_char() == 'V'){
+		if ((read_char() == 'V')&&(recieve_flag==1)){
 			tc_stop(TC0,0); //no interupt when recieving new posisition
 			uint8_t tempXYCoordinates[2] = {0}; //recieve 6 chars 3x and 3y
 			for(int i = 0; i < 2; i++){
@@ -36,6 +37,7 @@ int main (void)
 			for(int i = 0; i < 2; i++){
 				finalXYCoordinates[i] = tempXYCoordinates[i];
 			}
+			recieve_flag=0;
 			tc_start(TC0,0);
 		}
 	}
