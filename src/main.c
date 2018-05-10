@@ -9,7 +9,7 @@
 #include "uartfunctions.h"
 
 
-extern uint8_t finalXYCoordinates[2] = {0,0};
+extern uint8_t finalXYCoordinates[2] = {120,65};
 //extern int recieve_flag = 1;
 #define UART_BAUDRATE	115200
 
