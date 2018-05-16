@@ -40,6 +40,7 @@ int main (void)
 			}
 			recieve_flag=0;
 			tc_start(TC0,0);
+		
 		}
 	}
 }
