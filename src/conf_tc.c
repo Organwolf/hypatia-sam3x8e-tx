@@ -9,8 +9,11 @@
 #include "conf_tc.h"
 
 #define FREQ 140			//timer frequency
-#define CALC (42000000/FREQ)
+#define CALC (42000000/FREQ)//Timer divisor calculation. Used to configure TC
 
+/************************************************************************/
+/* Initialize the Time Counter Interrupt on TC0                         */
+/************************************************************************/
 void configure_tc(void)
 {
 	/* Configure PMC */

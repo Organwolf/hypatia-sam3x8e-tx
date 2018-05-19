@@ -1,5 +1,10 @@
-/**
- * Authors: Aron Polner & Filip Nilsson
+ /**
+ * Created: 2018-05-19
+ * Authors: Aron Polner & Filip Nilsson & Viktor Kullberg
+ *
+ * Main file for the Arduino Due which is a part the indoor positioning system.
+ * The Arduino Due receives X and Y coordinates on the UART from a connected PC.
+ * The received data is forwarded through the USART0 as a part of a predetermined data packet.
  */
 #include <asf.h>
 #include "usart0.h"
@@ -8,15 +13,13 @@
 #include "uart.h"
 #include "uartfunctions.h"
 
-
-extern uint8_t finalXYCoordinates[2] = {120,65};
+extern uint8_t finalXYCoordinates[2] = {50,150};	//(Actual coordinate)/2.
 extern int recieve_flag = 1;
 
 #define UART_BAUDRATE	115200
 
 int main (void)
 {
-	/* Insert system clock initialization code here (sysclk_init()). */
 	sysclk_init();
 	board_init();
 	usart0_init();

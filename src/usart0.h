@@ -1,7 +1,7 @@
 /*
  * usart0.h
  *
- * Created: 2018-02-20 20:08:06
+ * Created: 2018-05-19
  *  Author: Filip Nilsson
  */ 
 
@@ -12,8 +12,8 @@
 void usart0_init(void);
 void usart0_transmit(unsigned char data);
 char usart0_receive(void);
-extern uint8_t finalXYCoordinates[];
-extern int recieve_flag;
+extern uint8_t finalXYCoordinates[];		//Global
+extern int recieve_flag;					//Global
 
 
 #endif /* UART_H_ */
