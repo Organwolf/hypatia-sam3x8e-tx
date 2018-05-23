@@ -9,17 +9,17 @@
 #include "uart.h"
 
 /* UART Control Register (pointer) */
-reg_address_t *const p_UART_CR = (reg_address_t *) 0x400E0800U;
+uint32_t *const p_UART_CR = (uint32_t *) 0x400E0800U;
 /* UART Mode Register (pointer) */
-reg_address_t *const p_UART_MR = (reg_address_t *) 0x400E0804U;
+uint32_t *const p_UART_MR = (uint32_t *) 0x400E0804U;
 /* UART Status Register (pointer) */
-reg_address_t *const p_UART_SR = (reg_address_t *) 0x400E0814U;
+uint32_t *const p_UART_SR = (uint32_t *) 0x400E0814U;
 /* UART Receiver Holding Register (pointer) */
-reg_address_t *const p_UART_RHR = (reg_address_t *) 0x400E0818U;
+uint32_t *const p_UART_RHR = (uint32_t *) 0x400E0818U;
 /* UART Transmit Holding Register (pointer) */
-reg_address_t *const p_UART_THR = (reg_address_t *) 0x400E081CU;
+uint32_t *const p_UART_THR = (uint32_t *) 0x400E081CU;
 /* UART Baud Rate Generator Register (pointer) */
-reg_address_t *const p_UART_BRGR = (reg_address_t *) 0x400E0820U;
+uint32_t *const p_UART_BRGR = (uint32_t *) 0x400E0820U;
 
 /*
  * UART Configuration

@@ -11,8 +11,6 @@
 
 #include <asf.h>
 
-typedef uint32_t reg_address_t;
-
 /* Master Clock Frequency (84 MHz) */
 #define MCK 84000000U
 
