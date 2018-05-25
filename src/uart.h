@@ -1,18 +1,19 @@
+
 /*
- * io_uart.h
+ * Author: Viktor Kullberg
  *
- * This file contains functions for UART communication.
- *
- * Created by: Mathias Beckius, 2014-03-18
- */ 
+*/
+ 
 
 #ifndef IO_UART_H_
 #define IO_UART_H_
 
 #include <asf.h>
 
-/* Master Clock Frequency (84 MHz) */
+/* Clock frequency, used for calculating baudrate,84 MHz */
 #define MCK 84000000U
+
+
 
 /* UART Control Register */
 #define UART_CR (*p_UART_CR)
